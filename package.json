@@ -1,0 +1,31 @@
+{
+  "name": "@minogin/vue-drag-resize-rotate",
+  "version": "0.1.0",
+  "description": "Vue drag-resize-rotate component",
+  "keywords": [
+    "vue",
+    "drag",
+    "resize",
+    "rotate",
+    "draggable",
+    "resizable",
+    "rotateable"
+  ],
+  "author": {
+    "name": "Andrey Minogin",
+    "email": "minogin@gmail.com"
+  },
+  "license": "MIT",
+  "main": "src/drr.vue",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/minogin/drr"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "vue": "^2.5.17",
+    "@minogin/vector": "^1.0.2"
+  }
+}
