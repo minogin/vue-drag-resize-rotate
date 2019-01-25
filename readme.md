@@ -287,9 +287,13 @@ height: 100%;
 ```
 style on the content element. 
 
+# Repository
+
+https://github.com/minogin/vue-drag-resize-rotate
+
 # Contacts
 
-Please contact me at [minogin@gmail.com](mailto:minogin@gmail.com) 
+Please contact me at [minogin@gmail.com](mailto:minogin@gmail.com) or at GitHub 
 
 # License
 
