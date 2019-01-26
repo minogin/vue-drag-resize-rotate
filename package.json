@@ -15,17 +15,16 @@
     "name": "Andrey Minogin",
     "email": "minogin@gmail.com"
   },
-  "license": "MIT",
+  "license": "ISC",
   "main": "src/drr.vue",
   "repository": {
     "type": "git",
-    "url": "https://github.com/minogin/drr"
+    "url": "https://github.com/minogin/vue-drag-resize-rotate"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "vue": "^2.5.17",
     "@minogin/vector": "^1.0.2"
   }
 }
