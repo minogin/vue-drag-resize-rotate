@@ -6,12 +6,12 @@ Vue component which acts as a draggable, resizable and rotateable container for 
 * Correct rotation based on vector geometry. Rotated container resizes correctly.
 * Supports fixed aspect ratio which is applied correctly when container is rotated.
 * Supports active (e.g. editable) content. For example you can create a draggable and resizable textbox and edit the text inside on double click.
-* Supports both outer and inner boundaries. E.g. container would always contain inner boundary and outer boundary would always contain the container. 
+* Supports both outer and inner boundaries, i.e. container will always contain inner boundary and outer boundary will always contain the container. 
 * DRR-containers could be nested, e.g. for editing tree-like structures.
 
-### Caution!
+### Please note!
           
-(x; y) are always the coordinates of the **center** of the container, not the left-top corner. It is because the container could be rotated and therefore we don't know which corner would be left-top.
+(x; y) are the coordinates of the **center** of the container, not the left-top corner. It is because the container could be rotated and therefore we don't know which corner would be left-top.
 
 ### Inspired by
 
@@ -85,7 +85,7 @@ Required: `true`
 
 Center of the container.
 
-**Attention!**\
+**Please note!**\
 (x; y) are the coordinates of the **center** of the container, not the left-top corner. It is because the container could be rotated and therefore we don't know which corner would be left-top.
 
 #### w, h
@@ -195,7 +195,7 @@ Fires when container is selected (focused).
 #### deselect
 Fires when container loses focus by clicking outside of the container.
 
-**Caution!** Currently clicking on another DRRs does not deselect current DRR. You must keep proper selection yourself using `selected` property. 
+**Please note!** Currently clicking on another DRRs does not deselect current DRR. You must keep proper selection yourself using `selected` property. 
 
 #### dragstart (rect)
 Properties:\
@@ -209,7 +209,7 @@ Properties:\
 
 Fires continuously while dragging
 
-**Caution!** This event fires many times per second. Consider handler [debouncing](https://lodash.com/docs/#debounce).  
+**Please note!** This event fires many times per second. Consider handler [debouncing](https://lodash.com/docs/#debounce).  
  
 #### dragstop (rect, startRect)
 Properties:\
@@ -230,7 +230,7 @@ Properties:\
 
 Fires continuously while resizing.
 
-**Caution!** This event fires many times per second. Consider handler [debouncing](https://lodash.com/docs/#debounce).  
+**Please note!** This event fires many times per second. Consider handler [debouncing](https://lodash.com/docs/#debounce).  
  
 #### resizestop (rect, startRect)
 Properties:\
@@ -251,7 +251,7 @@ Properties:\
 
 Fires continuously while rotating.
 
-**Caution!** This event fires many times per second. Consider handler [debouncing](https://lodash.com/docs/#debounce).  
+**Please note!** This event fires many times per second. Consider handler [debouncing](https://lodash.com/docs/#debounce).  
  
 #### rotatestop (rect, startRect)
 Properties:\
