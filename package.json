@@ -1,6 +1,6 @@
 {
   "name": "@minogin/vue-drag-resize-rotate",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Vue component which acts as a draggable, resizable and rotateable container for any content.",
   "keywords": [
     "vue",
