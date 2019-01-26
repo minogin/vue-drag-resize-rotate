@@ -148,11 +148,21 @@ Type: `Boolean`\
 Required: `false`\
 Default: `false`
 
-True means that there is some content in the container that could be activated by double click. For example editable text field, an image which enlarges or some nested elements.
-When content is activated by double click the container is locked and every child receives 'content-active' event. The content must determine by itself when the job is finished and send the 'content-inactive' event to the parent DRR like this:
+Setting this to `true` means that there is some content in the container that could be activated by double click. For example editable text field, an image which enlarges or some active nested elements.
+When content is activated by double click the container gets locked and every child receives 'active' event.
 ```javascript
+// In child component:
+mounted() {
+  this.$on('active', this.onActive)
+},
+```
+
+The container itself doesn't roll back to normal state on blur. The children must determine by themselves when the job is finished and send the 'content-inactive' event to the parent DRR like this:
+```javascript
+// In child component:
 this.$parent.$emit('content-inactive')
-```      
+```
+      
 
 #### outerBound
 Type: `Object`\
@@ -268,24 +278,36 @@ Fired when drag, resize or rotate finishes.
 
 #### content-active
 
-Fired when container is double-clicked and `hasActiveContent` property is set to `true`.
+Fired when container is double-clicked and `hasActiveContent` property is set to `true`. See `hasActiveContent` property.
 
 #### active
 
-Fired on every child when container is double-clicked and `hasActiveContent` property is set to `true`.
+Fired on every child component when container is double-clicked and `hasActiveContent` property is set to `true`. See `hasActiveContent` property.
 
 #### inactive
 
-Fired on every child when container receives 'content-inactive' event and `hasActiveContent` property is set to `true`.
+Fired on every child when container receives 'content-inactive' event and `hasActiveContent` property is set to `true`. Might be useful to inactivate multiple children. See `hasActiveContent` property.  
 
-# Hints
+## Control events
+
+#### content-inactive
+
+When container being in 'active content' state receives this event it returns to normal state. This event must be fired by children when content job is finished. See `hasActiveContent` property.
+
+## Hints
 
 For the content (img, div, etc.) to resize along with the container use
 ```css
 width: 100%;
 height: 100%;
 ```
-style on the content element. 
+style on the content element.
+
+For nested text inputs use
+```css
+position: absolute;
+```
+ 
 
 # Repository
 
