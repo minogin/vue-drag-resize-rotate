@@ -10,7 +10,7 @@
   export default {
     data() {
       return {
-        text: 'Double click me',
+        text: 'Double click me to edit',
         textActive: false
       }
     },

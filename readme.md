@@ -1,6 +1,12 @@
 # Description
 Vue component which acts as a draggable, resizable and rotateable container for any content.
 
+![Demo](./images/demo.jpg)
+
+### Demo
+
+http://drr.minogin.com/
+
 ### Features
 * All the properties are reactive.
 * Correct rotation based on vector geometry. Rotated container resizes correctly.
