@@ -1,7 +1,7 @@
 # Description
 Vue component which acts as a draggable, resizable and rotateable container for any content.
 
-![Demo](./images/demo.jpg)
+[![Demo](./images/demo.jpg)](http://drr.minogin.com/)
 
 ### Demo
 
