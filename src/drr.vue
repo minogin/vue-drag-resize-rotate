@@ -116,6 +116,12 @@
       },
       innerBound: {
         type: Object
+      },
+      dragHandler: {
+        type: Function
+      },
+      resizeHandler: {
+        type: Function
       }
     },
 
@@ -147,9 +153,11 @@
 
       classObject() {
         return {
-          active: this.active,
-          inactive: !this.active,
-          dragging: this.bodyDrag,
+          'active': this.active,
+          'inactive': !this.active,
+          'selectable': this.selectable,
+          'non-selectable': !this.selectable,
+          'dragging': this.bodyDrag,
           'content-active': this.contentActive
         }
       },
@@ -181,16 +189,6 @@
           return stickStyle;
         }
       },
-
-      rect() {
-        return {
-          x: this.cx,
-          y: this.cy,
-          w: this.width,
-          h: this.height,
-          angle: this.rotation
-        }
-      }
     },
 
     watch: {
@@ -225,14 +223,14 @@
         if (this.stickDrag || this.bodyDrag)
           return
 
-        this.cx = this.x;
+        this.cx = this.x
       },
 
       y() {
         if (this.stickDrag || this.bodyDrag)
           return
 
-        this.cy = this.y;
+        this.cy = this.y
       },
 
       w() {
@@ -312,7 +310,28 @@
     },
 
     methods: {
+      getRect() {
+        return {
+          x: this.cx,
+          y: this.cy,
+          w: this.width,
+          h: this.height,
+          angle: this.rotation
+        }
+      },
+
+      setRect(r) {
+        this.cx = r.x
+        this.cy = r.y
+        this.width = r.w
+        this.height = r.h
+        this.angle = r.angle
+      },
+
       dblclick(e) {
+        if (!this.selectable)
+          return
+
         this.$emit('content-active')
       },
 
@@ -366,8 +385,8 @@
           return
         }
         else {
-          e.stopPropagation()
           e.preventDefault()
+          e.stopPropagation()
         }
 
         let target = e.target || e.srcElement;
@@ -396,7 +415,7 @@
         this.dragged = false
 
         this.dragStartEmitted = false
-        this.startRect = _.cloneDeep(this.rect)
+        this.startRect = _.cloneDeep(this.getRect())
 
         this.stickStartPos.mouseX = e.pageX || e.touches[0].pageX
         this.stickStartPos.mouseY = e.pageY || e.touches[0].pageY
@@ -457,20 +476,23 @@
         this.cx = stickStartPos.cx + delta.x
         this.cy = stickStartPos.cy + delta.y
 
+        if (this.dragHandler)
+          this.setRect(this.dragHandler(this.getRect()))
+
         if (!this.dragStartEmitted) {
           this.$emit('dragstart', this.startRect);
           this.dragStartEmitted = true
         }
 
         this.dragged = true
-        this.$emit('drag', this.rect);
+        this.$emit('drag', this.getRect());
       },
 
       bodyUp() {
         this.bodyDrag = false;
         if (this.dragged) {
-          this.$emit('dragstop', this.rect, this.startRect);
-          this.$emit('change', this.rect);
+          this.$emit('dragstop', this.getRect(), this.startRect);
+          this.$emit('change', this.getRect());
         }
 
         this.stickStartPos = { mouseX: 0, mouseY: 0, x: 0, y: 0, w: 0, h: 0 };
@@ -482,7 +504,7 @@
 
         this.resizeStartEmitted = false
         this.rotateStartEmitted = false
-        this.startRect = _.cloneDeep(this.rect)
+        this.startRect = _.cloneDeep(this.getRect())
 
         this.stickDrag = true;
         this.resized = false
@@ -519,7 +541,7 @@
 
           this.rotation = Vector.deg(v.angle()) + 90
           this.rotated = true
-          this.$emit('rotate', this.rect);
+          this.$emit('rotate', this.getRect());
         }
         else {
           let dirX = this.currentStick[1] == 'r' ? 1 : -1
@@ -621,13 +643,16 @@
           this.width = stickStartPos.width + dirX * pn.x
           this.height = stickStartPos.height + dirY * pn.y
 
+          if (this.resizeHandler)
+            this.setRect(this.resizeHandler(this.getRect()))
+
           if (!this.resizeStartEmitted) {
             this.$emit('resizestart', this.startRect);
             this.resizeStartEmitted = true
           }
 
           this.resized = true
-          this.$emit('resize', this.rect);
+          this.$emit('resize', this.getRect());
         }
       },
 
@@ -643,13 +668,13 @@
         };
 
         if (this.resized) {
-          this.$emit('resizestop', this.rect, this.startRect);  // TODO
-          this.$emit('change', this.rect);
+          this.$emit('resizestop', this.getRect(), this.startRect);  // TODO
+          this.$emit('change', this.getRect());
         }
 
         if (this.rotated) {
-          this.$emit('rotatestop', this.rect, this.startRect);
-          this.$emit('change', this.rect);
+          this.$emit('rotatestop', this.getRect(), this.startRect);
+          this.$emit('change', this.getRect());
         }
       },
     },
@@ -666,7 +691,18 @@
     cursor: pointer;
   }
 
-  .drr:hover:before {
+  .drr.active:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    outline: 2px dashed lightskyblue;
+  }
+
+  .drr.selectable.inactive:hover:before {
     content: '';
     width: 100%;
     height: 100%;
@@ -677,15 +713,8 @@
     outline: 2px dashed #d6d6d6;
   }
 
-  .drr.active:before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    outline: 2px dashed lightskyblue;
+  .drr.non-selectable {
+    pointer-events: none;
   }
 
   .drr-stick {
