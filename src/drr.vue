@@ -8,7 +8,7 @@
     <div
       v-for="stick in sticks"
       class="drr-stick"
-      :class="['drr-stick-' + stick, resizable ? '' : 'not-resizable']"
+      :class="['drr-stick-' + stick]"
       @mousedown.stop.prevent="stickDown(stick, $event)"
       @touchstart.stop.prevent="stickDown(stick, $event)"
       :style="drrStick(stick)">
@@ -499,7 +499,7 @@
       },
 
       stickDown: function (stick, ev) {
-        if (!this.resizable || !this.active)
+        if (!this.active)
           return
 
         this.resizeStartEmitted = false
