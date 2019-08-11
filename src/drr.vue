@@ -354,15 +354,10 @@
       deselect(e) {
         const mouseX = e.pageX
         const mouseY = e.pageY
-        if(
-          this.active &&
-          (
-            mouseX < this.$el.getBoundingClientRect().x &&
-            mouseX < (this.$el.getBoundingClientRect().x + this.$el.getBoundingClientRect().width) &&
-            mouseY > this.$el.getBoundingClientRect().y &&
-            mouseY > (this.$el.getBoundingClientRect().y + this.$el.getBoundingClientRect().height)
-          )
-        ) {
+        if(mouseX < this.$el.getBoundingClientRect().x ||
+            mouseX > (this.$el.getBoundingClientRect().x + this.$el.getBoundingClientRect().width) ||
+            mouseY < this.$el.getBoundingClientRect().y ||
+            mouseY > (this.$el.getBoundingClientRect().y + this.$el.getBoundingClientRect().height)) {
           this.$emit('deselect')
           this.active = false
         }
